@@ -19,11 +19,11 @@ Dependencies are managed using **uv**.
 assignment/
 ├── inputs/              # Input files (PDF file downloaded and renamed)
 ├── logs/                # Empty directory, included for log persistence during docker run
-├── outputs/             # Generated output files (contains output submission, also stores output from docker/local run)
+├── outputs/             # Generated output files (contains output submission[file & db], also stores output from docker/local run)
 ├── source_code/         # Main Python scripts
 │   ├── pdf_to_csv.py    # Script for Task 1
-│   ├── web_scraper.py   # Script for Task 2 (yet to be completed)
-├── utils/               # Helper modules (such as loggers)
+│   ├── web_scraper.py   # Script for Task 2 
+├── utils/               # Helper modules (loggers,DB helper class and parameters)
 ├── pyproject.toml       # Project dependencies 
 ├── uv.lock              # Locked dependency versions
 ├── requirements.txt     # Exported requirements for pip users  
@@ -62,7 +62,7 @@ docker run --rm \
   -v $(pwd)/inputs:/assignment/inputs \
   -v $(pwd)/outputs:/assignment/outputs \
   -v $(pwd)/logs:/assignment/logs \
-  assignment python web_scraper.py 
+  assignment python web_scraper.py -d MM/DD/YYYY
 ```
 
 The generated CSV/SQLite output will be in `./outputs/`. Logs of corresponding scripts will be at `./logs/`
@@ -79,7 +79,7 @@ uv sync --frozen
 uv run python source_code/pdf_to_csv.py
 
 # Run Task 2 
-uv run python source_code/web_scraper.py
+uv run python source_code/web_scraper.py -d MM/DD/YYYY
 ```
 
 ---
@@ -105,7 +105,7 @@ They include error details and info messages for easier debugging.
 * Only `inputs/` and `outputs/` relevant to the submission are committed.
 * CSV output is encoded in **UTF-8-SIG** to preserve special characters in Excel.
 * `uv.lock` ensures deterministic builds. Use `uv sync --frozen` to avoid accidental upgrades.
-
+* DB_PATH has to be adjusted for running the code locally.
 ---
 
 ## Author
