@@ -1,7 +1,7 @@
 import os
 BASE_URL = 'https://indianexpress.com/'
 BUSINESS_URL = 'https://indianexpress.com/section/business/'
-DB_PATH = '../outputs/db/isaras.db'
+DB_PATH = '../outputs/db/edtech.db'
 MAX_RETRIES = 3
 REQUEST_TIMEOUT = 15
 ROBOT_URL = 'https://indianexpress.com/robots.txt/'

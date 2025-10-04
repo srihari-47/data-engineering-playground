@@ -2,34 +2,52 @@
 
 ## Overview
 
-This repository contains solutions for the data engineering assignment.
+This repository contains solutions for the data engineering assignment given by an edtech startup specializing in building AI mentors. 
 It includes two tasks:
 
 1. **Task 1** – Extract text from a PDF and convert it to CSV.
-2. **Task 2** – Scrape business articles from a news site and store them in SQLite.
+2. **Task 2** – Scrape business articles from a news site(https://indianexpress.com) and store them in SQLite.
 
-All code runs locally or inside a Docker container.
+All code runs locally or inside a Docker container(The assignment specifically mentioned that the application has to be containarized). 
 Dependencies are managed using **uv**.
+
+---
+
+## Motivation
+
+I decided to include this repository as part of my portfolio because I hadn’t previously worked on **PDF conversion** and **extensive web scraping**.  
+These assignments gave me the chance to treat them as **mini-projects**, applying data engineering fundamentals, containerization, and structured data handling in practice.  
+This makes it a good learning artifact and demonstration of applied problem-solving.
+
 
 ---
 
 ## Repository Layout
 
+
+
+
 ```
 assignment/
-├── inputs/              # Input files (PDF file downloaded and renamed)
-├── logs/                # Empty directory, included for log persistence during docker run
-├── outputs/             # Generated output files (contains output submission[file & db], also stores output from docker/local run)
-├── source_code/         # Main Python scripts
-│   ├── pdf_to_csv.py    # Script for Task 1
-│   ├── web_scraper.py   # Script for Task 2 
-├── utils/               # Helper modules (loggers,DB helper class and parameters)
-├── pyproject.toml       # Project dependencies 
-├── uv.lock              # Locked dependency versions
-├── requirements.txt     # Exported requirements for pip users  
-├── Dockerfile           # Docker build file
+├── inputs/                 # Input files (PDF file downloaded and renamed)
+├── logs/                   # Empty directory, included for log persistence during docker run
+├── outputs/                # Generated output files (submission file & DB, also stores output from docker/local run)
+│   ├── db/                 # SQLite database files
+│   └── converted_to_pdf_submission.csv
+├── source_code/            # Main Python scripts
+│   ├── pdf_to_csv.py       # Script for Task 1
+│   ├── web_scraper.py      # Script for Task 2
+│   └── utils/              # Helper modules
+│       ├── DB_helper.py        # Database helper class
+│       ├── get_logger.py       # Centralized logging utility
+│       └── parameters.py       # Configs & constants
+├── pyproject.toml          # Project dependencies
+├── uv.lock                 # Locked dependency versions
+├── requirements.txt        # Exported requirements for pip users
+├── Dockerfile              # Docker build file
 ├── .gitignore
-└── README.md
+└── README.md               # Project documentation
+
 ```
 
 ---
@@ -105,7 +123,7 @@ They include error details and info messages for easier debugging.
 * Only `inputs/` and `outputs/` relevant to the submission are committed.
 * CSV output is encoded in **UTF-8-SIG** to preserve special characters in Excel.
 * `uv.lock` ensures deterministic builds. Use `uv sync --frozen` to avoid accidental upgrades.
-* DB_PATH has to be adjusted for running the code locally.
+* DB_PATH and log path has to be adjusted for running the code locally.
 ---
 
 ## Author

@@ -24,11 +24,11 @@ RUN uv sync --frozen
 # Copy source code
 COPY source_code/ ./source_code
 
-# Create non-root user 'isaras' and change the ownership of our assignment directories and its sub directories
-RUN useradd isaras  && chown -R isaras:isaras /assignment
+# Create non-root user 'edtech' and change the ownership of our assignment directories and its sub directories
+RUN useradd edtech  && chown -R edtech:edtech /assignment
 
-#switching to isaras user
-USER isaras
+#switching to edtech user
+USER edtech
 
 #Change the working directory to source_code - for smoother script run
 WORKDIR /assignment/source_code

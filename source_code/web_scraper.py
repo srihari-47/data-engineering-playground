@@ -1,9 +1,6 @@
 #!/usr/local/bin/python3
 """
     This is a  scraper script that scraps the business news in the business section from https://indianexpress.com/. This works only for this site.
-
-    There is some issue with the site when page count increases - we are not able to access last page. Due to this last minute changes
-    were made to the script. Still the code functionality serves its purpose.
 """
 import argparse
 import json
@@ -144,10 +141,6 @@ def get_total_pages(start_page=1) -> int | None:
 
     That final page number is saved as total_pages.
 
-            *************************IMPORTANT*****************************
-    NOTE: For some reason, Indian express's last page number has issues (404 client error).
-          THis happens when pages gets increased. SO for now in such exceptions - we consider
-          last_viewed_page -1 as last_page.
 
     :param start_page: Starting page always be 1
     :type start_page: int
@@ -191,7 +184,7 @@ def get_total_pages(start_page=1) -> int | None:
                 # - we exit. This means there is no point in going further as we will keep getting same max page_number.
                 if max(pages) == max(all_pages):
                     logger.info(f'total page count: {max(pages)}')
-                    return max(pages) - 1
+                    return max(pages)
                 else:
                     # Append the page_numbers found during this iteration to all_pages
                     all_pages += pages
@@ -201,9 +194,6 @@ def get_total_pages(start_page=1) -> int | None:
             # something is wrong if we are here - so raise error.
             raise RuntimeError(f'No valid page numbers found in {BUSINESS_URL}')
         except requests.exceptions.RequestException as e:
-            # This could be a last page issue. This is hard to fix now in this framework(This issue was unprecedented). so let's return with max_pages - 1
-            if pg_no:
-                return pg_no
             raise RuntimeError(f'something is not right...') from e
 
 
@@ -495,7 +485,7 @@ def main() -> None:
             logger.info(f'Total of {len(rows)} articles has to be inserted in the articles table')
             # Now it is time to insert the data on the table
             update_db(rows)
-            logger.info('We successfully added the articles to our ISARAS db')
+            logger.info('We successfully added the articles to our edtech db')
         else:
             raise RuntimeError('Scraper is trying to access disallowed data from website. Quitting gracefully')
     except KeyboardInterrupt:
